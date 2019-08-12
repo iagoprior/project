@@ -1,0 +1,109 @@
+
+
+<head>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  </head>
+  
+  <body>
+  <div id="graph"></div>
+  <script>
+      Plotly.d3.csv("https://raw.githubusercontent.com/iagoprior/project/master/rfactors_ZnO_ra_dep.csv", function(err, rows){
+  
+  function unpack(rows, key) {
+  return rows.map(function(row) { return row[key]; });
+  }
+  
+  // header values
+  var headerNames = Plotly.d3.keys(rows[0]);
+  var headerValues = [headerNames[0],headerNames[1],
+                      headerNames[2],headerNames[3]];
+  
+  // cell values
+  var cellValues = [];
+  for (i = 0; i < headerValues.length; i++) { 
+    cellValue = unpack(rows, headerValues[i]);
+    cellValues[i] = cellValue;
+  }
+  
+  // clean date
+  for (i = 0; i < cellValues[0].length; i++) {
+  var dateValue = cellValues[0][i].split(' ')[0]
+  cellValues[0][i] = dateValue
+  }
+  
+  // create table
+  var table = {
+    type: 'table',
+    columnwidth: [150,200,200,150],
+    columnorder: [0,1,2,3],
+    header: {
+      values: headerValues, 
+      align: "center",
+      line: {width: 1, color: 'rgb(50, 50, 50)'},
+      fill: {color: ['rgb(235, 100, 230)']},
+      font: {family: "Arial", size: 11, color: "white"}
+    },
+    cells: {
+      values: cellValues,
+      align: ["center", "center"],
+      line: {color: "black", width: 1},
+      fill: {color: ['rgb(235, 193, 238)', 'rgba(228, 222, 249, 0.65)']},
+      font: {family: "Arial", size: 10, color: ["black"]}
+    },
+    xaxis: 'x',
+    yaxis: 'y',
+    domain: {x: [0,0.4], y: [0,1]}
+  }
+
+  // create 1st plot
+  var trace1 = {
+    x: unpack(rows, 'd1'),
+    y: unpack(rows, 'd2'),
+    z: unpack(rows, 'd3'),
+    xaxis: 'x',
+    yaxis: 'y',
+    zaxis: 'z',
+    mode: 'lines',
+    type: 'contour',
+    line: {width: 2, color: '#9748a1'},
+    name: 'hash-rate-TH/s'
+  }
+  
+ 
+  var data = [table,trace1]
+  
+  // define subplot axes
+  var axis = {
+    showline: true,
+    zeroline: false,
+    showgrid: true,
+    mirror:true, 
+    ticklen: 5, 
+    gridcolor: '#ffffff',
+    tickfont: {size: 10},
+  }
+  
+  var axis1 = {domain: [0.5, 1], anchor: 'y1', showticklabels: true, hoverformat: '.2f'}
+  
+  var axis4 = {domain: [1, 1], anchor: 'x1', hoverformat: '.2f'}
+  
+  
+  // define layout
+  var layout = {
+    title: "rfactors_ZnO_ra_dep",
+    plot_bgcolor: 'rgba(228, 222, 249, 0.65)',
+    showlegend: true,
+    xaxis1: Object.assign(axis1,axis),
+    
+    yaxis1: Object.assign(axis4,axis),  
+    
+  }
+
+  Plotly.plot('graph', data, layout);  
+  
+});   
+  </script>
+  </body>
+  
+  
