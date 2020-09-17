@@ -8,7 +8,7 @@
   <body>
   <div id="graph"></div>
   <script>
-      Plotly.d3.csv("https://raw.githubusercontent.com/iagoprior/project/master/rfactors_ZnO2x2_d12_d23_1b_termin_Zn-B.csv", function(err, rows){
+      Plotly.d3.csv("https://raw.githubusercontent.com/iagoprior/project/master/rfactors_ZnO2x2_d12_d23_1b_melhor_termin_Zn-A.csv", function(err, rows){
   
   function unpack(rows, key) {
   return rows.map(function(row) { return row[key]; });
@@ -91,7 +91,7 @@
   
   // define layout
   var layout = {
-    title: "rfactors_ZnO_ra_dep",
+    title: "rfactors_ZnO2x2_d12_d23_1b_termin_Zn-A",
     plot_bgcolor: 'rgba(228, 222, 249, 0.65)',
     showlegend: true,
     xaxis1: Object.assign(axis1,axis),
